@@ -7,12 +7,12 @@
 //
 
 #import "ASIHTTPRequest.h"
-#import "HTTPOperation.h"
+#import "MNHTTPOperation.h"
 
 @interface ASIHTTPRequest (MNetworking)
 
 @property (nonatomic, strong) NSString *groupName;
 
-@property (nonatomic, strong) HTTPOperation *operation;
+@property (nonatomic, strong) MNHTTPOperation *operation;
 
 @end

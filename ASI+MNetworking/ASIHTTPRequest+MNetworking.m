@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 Mindy. All rights reserved.
 //
 
-#import "ASIHTTPRequest+HTTPOperation.h"
+#import "ASIHTTPRequest+MNetworking.h"
 #import <objc/runtime.h>
 
 
@@ -25,12 +25,12 @@ static const char *operationKey;
     objc_setAssociatedObject(self, &groupNameKey, groupName, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
--(HTTPOperation *)operation{
+-(MNHTTPOperation *)operation{
    return objc_getAssociatedObject(self, &operationKey);
 }
 
 
--(void)setOperation:(HTTPOperation *)operation{
+-(void)setOperation:(MNHTTPOperation *)operation{
     objc_setAssociatedObject(self, &operationKey, operation, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
