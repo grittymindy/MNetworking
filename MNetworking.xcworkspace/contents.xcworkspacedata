@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:MNetworking"
+      name = "MNetworking">
+      <FileRef
+         location = "group:HTTPClient.h">
+      </FileRef>
+      <FileRef
+         location = "group:HTTPClient.m">
+      </FileRef>
+      <FileRef
+         location = "group:HTTPOperation.h">
+      </FileRef>
+      <FileRef
+         location = "group:HTTPOperation.m">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:ASI+MNetworking"
+      name = "ASI+MNetworking">
+      <FileRef
+         location = "group:ASIHTTPRequest+MNetworking.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIHTTPRequest+MNetworking.m">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:ASI Classes"
+      name = "ASI Classes">
+      <FileRef
+         location = "group:ASIAuthenticationDialog.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIAuthenticationDialog.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASICacheDelegate.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDataCompressor.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDataCompressor.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDataDecompressor.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDataDecompressor.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDownloadCache.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIDownloadCache.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIFormDataRequest.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIFormDataRequest.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIHTTPRequest.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIHTTPRequest.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIHTTPRequestConfig.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIHTTPRequestDelegate.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIInputStream.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASIInputStream.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASINetworkQueue.h">
+      </FileRef>
+      <FileRef
+         location = "group:ASINetworkQueue.m">
+      </FileRef>
+      <FileRef
+         location = "group:ASIProgressDelegate.h">
+      </FileRef>
+      <Group
+         location = "group:ASIWebPageRequest"
+         name = "ASIWebPageRequest">
+         <FileRef
+            location = "group:ASIWebPageRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIWebPageRequest.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:CloudFiles"
+         name = "CloudFiles">
+         <FileRef
+            location = "group:ASICloudFilesCDNRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesCDNRequest.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainer.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainer.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainerRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainerRequest.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainerXMLParserDelegate.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesContainerXMLParserDelegate.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesObject.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesObject.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesObjectRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesObjectRequest.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesRequest.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:S3"
+         name = "S3">
+         <FileRef
+            location = "group:ASINSXMLParserCompat.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3Bucket.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3Bucket.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3BucketObject.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3BucketObject.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3BucketRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3BucketRequest.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3ObjectRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3ObjectRequest.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3Request.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3Request.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3ServiceRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3ServiceRequest.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Tests"
+         name = "Tests">
+         <FileRef
+            location = "group:ASICloudFilesRequestTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASICloudFilesRequestTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIDataCompressorTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIDataCompressorTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIDownloadCacheTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIDownloadCacheTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIFormDataRequestTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIFormDataRequestTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIHTTPRequestTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIHTTPRequestTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASINetworkQueueTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASINetworkQueueTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3RequestTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIS3RequestTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASITestCase.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASITestCase.m">
+         </FileRef>
+         <FileRef
+            location = "group:ASIWebPageRequestTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ASIWebPageRequestTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:BlocksTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:BlocksTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ClientCertificateTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ClientCertificateTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:GHUnitTestMain.m">
+         </FileRef>
+         <FileRef
+            location = "group:PerformanceTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:PerformanceTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:ProxyTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:ProxyTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:StressTests.h">
+         </FileRef>
+         <FileRef
+            location = "group:StressTests.m">
+         </FileRef>
+      </Group>
+   </Group>
+</Workspace>
