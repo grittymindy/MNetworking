@@ -25,12 +25,12 @@
  POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#import "Reachability.h"
+#import "M_Reachability.h"
 
 
-NSString *const kReachabilityChangedNotification = @"kReachabilityChangedNotification";
+NSString *const kMReachabilityChangedNotification = @"kReachabilityChangedNotification";
 
-@interface Reachability ()
+@interface M_Reachability ()
 
 @property (nonatomic, assign) SCNetworkReachabilityRef  reachabilityRef;
 
@@ -72,9 +72,9 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
 #pragma unused (target)
 #if __has_feature(objc_arc)
-    Reachability *reachability = ((__bridge Reachability*)info);
+    M_Reachability *reachability = ((__bridge M_Reachability*)info);
 #else
-    Reachability *reachability = ((Reachability*)info);
+    M_Reachability *reachability = ((M_Reachability*)info);
 #endif
     
     // We probably don't need an autoreleasepool here, as GCD docs state each queue has its own autorelease pool,
@@ -86,7 +86,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 }
 
 
-@implementation Reachability
+@implementation M_Reachability
 
 @synthesize reachabilityRef;
 @synthesize reachabilitySerialQueue;
@@ -100,12 +100,12 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 #pragma mark - Class Constructor Methods
 
-+(Reachability*)reachabilityWithHostName:(NSString*)hostname
++(M_Reachability*)reachabilityWithHostName:(NSString*)hostname
 {
-    return [Reachability reachabilityWithHostname:hostname];
+    return [M_Reachability reachabilityWithHostname:hostname];
 }
 
-+(Reachability*)reachabilityWithHostname:(NSString*)hostname
++(M_Reachability*)reachabilityWithHostname:(NSString*)hostname
 {
     SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(NULL, [hostname UTF8String]);
     if (ref) 
@@ -123,7 +123,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     return nil;
 }
 
-+(Reachability *)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress 
++(M_Reachability *)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress 
 {
     SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)hostAddress);
     if (ref) 
@@ -140,7 +140,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     return nil;
 }
 
-+(Reachability *)reachabilityForInternetConnection 
++(M_Reachability *)reachabilityForInternetConnection 
 {   
     struct sockaddr_in zeroAddress;
     bzero(&zeroAddress, sizeof(zeroAddress));
@@ -150,7 +150,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     return [self reachabilityWithAddress:&zeroAddress];
 }
 
-+(Reachability*)reachabilityForLocalWiFi
++(M_Reachability*)reachabilityForLocalWiFi
 {
     struct sockaddr_in localWifiAddress;
     bzero(&localWifiAddress, sizeof(localWifiAddress));
@@ -165,7 +165,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 // Initialization methods
 
--(Reachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref 
+-(M_Reachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref 
 {
     self = [super init];
     if (self != nil) 
@@ -440,19 +440,19 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 #pragma mark - reachability status stuff
 
--(NetworkStatus)currentReachabilityStatus
+-(M_NetworkStatus)currentReachabilityStatus
 {
     if([self isReachable])
     {
         if([self isReachableViaWiFi])
-            return ReachableViaWiFi;
+            return M_ReachableViaWiFi;
         
 #if	TARGET_OS_IPHONE
-        return ReachableViaWWAN;
+        return M_ReachableViaWWAN;
 #endif
     }
     
-    return NotReachable;
+    return M_NotReachable;
 }
 
 -(SCNetworkReachabilityFlags)reachabilityFlags
@@ -469,14 +469,14 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 -(NSString*)currentReachabilityString
 {
-	NetworkStatus temp = [self currentReachabilityStatus];
+	M_NetworkStatus temp = [self currentReachabilityStatus];
 	
 	if(temp == reachableOnWWAN)
 	{
         // Updated for the fact that we have CDMA phones now!
 		return NSLocalizedString(@"Cellular", @"");
 	}
-	if (temp == ReachableViaWiFi) 
+	if (temp == M_ReachableViaWiFi) 
 	{
 		return NSLocalizedString(@"WiFi", @"");
 	}
@@ -510,7 +510,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     
     // this makes sure the change notification happens on the MAIN THREAD
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification 
+        [[NSNotificationCenter defaultCenter] postNotificationName:kMReachabilityChangedNotification 
                                                             object:self];
     });
 }

@@ -56,34 +56,34 @@
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
-extern NSString *const kReachabilityChangedNotification;
+extern NSString *const kMReachabilityChangedNotification;
 
-typedef NS_ENUM(NSInteger, NetworkStatus) {
+typedef NS_ENUM(NSInteger, M_NetworkStatus) {
     // Apple NetworkStatus Compatible Names.
-    NotReachable = 0,
-    ReachableViaWiFi = 2,
-    ReachableViaWWAN = 1
+    M_NotReachable = 0,
+    M_ReachableViaWiFi = 2,
+    M_ReachableViaWWAN = 1
 };
 
-@class Reachability;
+@class M_Reachability;
 
-typedef void (^NetworkReachable)(Reachability * reachability);
-typedef void (^NetworkUnreachable)(Reachability * reachability);
+typedef void (^M_NetworkReachable)(M_Reachability * reachability);
+typedef void (^M_NetworkUnreachable)(M_Reachability * reachability);
 
-@interface Reachability : NSObject
+@interface M_Reachability : NSObject
 
-@property (nonatomic, copy) NetworkReachable    reachableBlock;
-@property (nonatomic, copy) NetworkUnreachable  unreachableBlock;
+@property (nonatomic, copy) M_NetworkReachable    reachableBlock;
+@property (nonatomic, copy) M_NetworkUnreachable  unreachableBlock;
 
 
 @property (nonatomic, assign) BOOL reachableOnWWAN;
 
-+(Reachability*)reachabilityWithHostname:(NSString*)hostname;
-+(Reachability*)reachabilityForInternetConnection;
-+(Reachability*)reachabilityWithAddress:(const struct sockaddr_in*)hostAddress;
-+(Reachability*)reachabilityForLocalWiFi;
++(M_Reachability*)reachabilityWithHostname:(NSString*)hostname;
++(M_Reachability*)reachabilityForInternetConnection;
++(M_Reachability*)reachabilityWithAddress:(const struct sockaddr_in*)hostAddress;
++(M_Reachability*)reachabilityForLocalWiFi;
 
--(Reachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref;
+-(M_Reachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref;
 
 -(BOOL)startNotifier;
 -(void)stopNotifier;
@@ -101,7 +101,7 @@ typedef void (^NetworkUnreachable)(Reachability * reachability);
 // Is user intervention required?
 -(BOOL)isInterventionRequired;
 
--(NetworkStatus)currentReachabilityStatus;
+-(M_NetworkStatus)currentReachabilityStatus;
 -(SCNetworkReachabilityFlags)reachabilityFlags;
 -(NSString*)currentReachabilityString;
 -(NSString*)currentReachabilityFlags;

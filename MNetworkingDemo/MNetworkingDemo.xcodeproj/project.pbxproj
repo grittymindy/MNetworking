@@ -26,7 +26,7 @@
 		E1E603041ADA6BA900F62D21 /* M_ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E602BC1ADA6BA900F62D21 /* M_ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E1E603051ADA6BA900F62D21 /* M_ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E602BE1ADA6BA900F62D21 /* M_ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E1E603281ADA6F5400F62D21 /* LICENCE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E1E603241ADA6F5400F62D21 /* LICENCE.txt */; };
-		E1E603291ADA6F5400F62D21 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E603261ADA6F5400F62D21 /* Reachability.m */; };
+		E1E603291ADA6F5400F62D21 /* M_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E1E603261ADA6F5400F62D21 /* M_Reachability.m */; };
 		E1E6032A1ADA6F5400F62D21 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E1E603271ADA6F5400F62D21 /* README.md */; };
 		E1E6032C1ADA712B00F62D21 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E6032B1ADA712B00F62D21 /* libz.dylib */; };
 /* End PBXBuildFile section */
@@ -71,8 +71,8 @@
 		E1E602BD1ADA6BA900F62D21 /* M_ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M_ASINetworkQueue.h; sourceTree = "<group>"; };
 		E1E602BE1ADA6BA900F62D21 /* M_ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M_ASINetworkQueue.m; sourceTree = "<group>"; };
 		E1E603241ADA6F5400F62D21 /* LICENCE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
-		E1E603251ADA6F5400F62D21 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		E1E603261ADA6F5400F62D21 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E1E603251ADA6F5400F62D21 /* M_Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M_Reachability.h; sourceTree = "<group>"; };
+		E1E603261ADA6F5400F62D21 /* M_Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M_Reachability.m; sourceTree = "<group>"; };
 		E1E603271ADA6F5400F62D21 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E1E6032B1ADA712B00F62D21 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -198,8 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				E1E603241ADA6F5400F62D21 /* LICENCE.txt */,
-				E1E603251ADA6F5400F62D21 /* Reachability.h */,
-				E1E603261ADA6F5400F62D21 /* Reachability.m */,
+				E1E603251ADA6F5400F62D21 /* M_Reachability.h */,
+				E1E603261ADA6F5400F62D21 /* M_Reachability.m */,
 				E1E603271ADA6F5400F62D21 /* README.md */,
 			);
 			name = Reachability;
@@ -281,7 +281,7 @@
 				E12BF5CC1AEA1DAE0099F5F4 /* M_ASIHTTPRequest+MNetworking.m in Sources */,
 				E1E602FE1ADA6BA900F62D21 /* M_ASIAuthenticationDialog.m in Sources */,
 				E1E6032A1ADA6F5400F62D21 /* README.md in Sources */,
-				E1E603291ADA6F5400F62D21 /* Reachability.m in Sources */,
+				E1E603291ADA6F5400F62D21 /* M_Reachability.m in Sources */,
 				E1E6027F1ADA675A00F62D21 /* ViewController.m in Sources */,
 				E1E602FF1ADA6BA900F62D21 /* M_ASIDataCompressor.m in Sources */,
 				E1E6027C1ADA675A00F62D21 /* AppDelegate.m in Sources */,

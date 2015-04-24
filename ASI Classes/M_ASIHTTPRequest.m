@@ -13,7 +13,7 @@
 #import "M_ASIHTTPRequest.h"
 
 #if TARGET_OS_IPHONE
-#import "Reachability.h"
+#import "M_Reachability.h"
 #import "M_ASIAuthenticationDialog.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #else
@@ -4667,19 +4667,19 @@ static NSOperationQueue *sharedQueue = nil;
 
 + (void)registerForNetworkReachabilityNotifications
 {
-	[[Reachability reachabilityForInternetConnection] startNotifier];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+	[[M_Reachability reachabilityForInternetConnection] startNotifier];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kMReachabilityChangedNotification object:nil];
 }
 
 
 + (void)unsubscribeFromNetworkReachabilityNotifications
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kMReachabilityChangedNotification object:nil];
 }
 
 + (BOOL)isNetworkReachableViaWWAN
 {
-	return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN);	
+	return ([[M_Reachability reachabilityForInternetConnection] currentReachabilityStatus] == M_ReachableViaWWAN);	
 }
 
 + (void)reachabilityChanged:(NSNotification *)note

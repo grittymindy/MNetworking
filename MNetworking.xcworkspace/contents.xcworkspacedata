@@ -111,10 +111,10 @@
          location = "group:LICENCE.txt">
       </FileRef>
       <FileRef
-         location = "group:Reachability.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/Reachability/M_Reachability.h">
       </FileRef>
       <FileRef
-         location = "group:Reachability.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/Reachability/M_Reachability.m">
       </FileRef>
       <FileRef
          location = "group:README.md">
