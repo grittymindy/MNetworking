@@ -6,11 +6,11 @@
 //  Copyright 2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASIAuthenticationDialog.h"
-#import "ASIHTTPRequest.h"
+#import "M_ASIAuthenticationDialog.h"
+#import "M_ASIHTTPRequest.h"
 #import <QuartzCore/QuartzCore.h>
 
-static ASIAuthenticationDialog *sharedDialog = nil;
+static M_ASIAuthenticationDialog *sharedDialog = nil;
 BOOL isDismissing = NO;
 static NSMutableArray *requestsNeedingAuthentication = nil;
 
@@ -22,7 +22,7 @@ static const NSUInteger kDomainRow = 0;
 static const NSUInteger kDomainSection = 1;
 
 
-@implementation ASIAutorotatingViewController
+@implementation M_ASIAutorotatingViewController
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
@@ -32,7 +32,7 @@ static const NSUInteger kDomainSection = 1;
 @end
 
 
-@interface ASIAuthenticationDialog ()
+@interface M_ASIAuthenticationDialog ()
 - (void)showTitle;
 - (void)show;
 - (NSArray *)requestsRequiringTheseCredentials;
@@ -44,27 +44,27 @@ static const NSUInteger kDomainSection = 1;
 @property (atomic, retain) UITableView *tableView;
 @end
 
-@implementation ASIAuthenticationDialog
+@implementation M_ASIAuthenticationDialog
 
 #pragma mark init / dealloc
 
 + (void)initialize
 {
-	if (self == [ASIAuthenticationDialog class]) {
+	if (self == [M_ASIAuthenticationDialog class]) {
 		requestsNeedingAuthentication = [[NSMutableArray array] retain];
 	}
 }
 
-+ (void)presentAuthenticationDialogForRequest:(ASIHTTPRequest *)theRequest
++ (void)presentAuthenticationDialogForRequest:(M_ASIHTTPRequest *)theRequest
 {
 	// No need for a lock here, this will always be called on the main thread
 	if (!sharedDialog) {
 		sharedDialog = [[self alloc] init];
 		[sharedDialog setRequest:theRequest];
-		if ([theRequest authenticationNeeded] == ASIProxyAuthenticationNeeded) {
-			[sharedDialog setType:ASIProxyAuthenticationType];
+		if ([theRequest authenticationNeeded] == M_ASIProxyAuthenticationNeeded) {
+			[sharedDialog setType:M_ASIProxyAuthenticationType];
 		} else {
-			[sharedDialog setType:ASIStandardAuthenticationType];
+			[sharedDialog setType:M_ASIStandardAuthenticationType];
 		}
 		[sharedDialog show];
 	} else {
@@ -178,7 +178,7 @@ static const NSUInteger kDomainSection = 1;
 - (UIViewController *)presentingController
 {
 	if (!presentingController) {
-		presentingController = [[ASIAutorotatingViewController alloc] initWithNibName:nil bundle:nil];
+		presentingController = [[M_ASIAutorotatingViewController alloc] initWithNibName:nil bundle:nil];
 
 		// Attach to the window, but don't interfere.
 		UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
@@ -269,7 +269,7 @@ static const NSUInteger kDomainSection = 1;
 	UINavigationItem *navItem = [[navigationBar items] objectAtIndex:0];
 	if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
 		// Setup the title
-		if ([self type] == ASIProxyAuthenticationType) {
+		if ([self type] == M_ASIProxyAuthenticationType) {
 			[navItem setPrompt:@"Login to this secure proxy server."];
 		} else {
 			[navItem setPrompt:@"Login to this secure server."];
@@ -304,7 +304,7 @@ static const NSUInteger kDomainSection = 1;
 	[self showTitle];
 
 	// Setup toolbar buttons
-	if ([self type] == ASIProxyAuthenticationType) {
+	if ([self type] == M_ASIProxyAuthenticationType) {
 		[navItem setTitle:[[self request] proxyHost]];
 	} else {
 		[navItem setTitle:[[[self request] url] host]];
@@ -349,7 +349,7 @@ static const NSUInteger kDomainSection = 1;
 
 - (void)cancelAuthenticationFromDialog:(id)sender
 {
-	for (ASIHTTPRequest *theRequest in [self requestsRequiringTheseCredentials]) {
+	for (M_ASIHTTPRequest *theRequest in [self requestsRequiringTheseCredentials]) {
 		[theRequest cancelAuthentication];
 		[requestsNeedingAuthentication removeObject:theRequest];
 	}
@@ -360,7 +360,7 @@ static const NSUInteger kDomainSection = 1;
 {
 	NSMutableArray *requestsRequiringTheseCredentials = [NSMutableArray array];
 	NSURL *requestURL = [[self request] url];
-	for (ASIHTTPRequest *otherRequest in requestsNeedingAuthentication) {
+	for (M_ASIHTTPRequest *otherRequest in requestsNeedingAuthentication) {
 		NSURL *theURL = [otherRequest url];
 		if (([otherRequest authenticationNeeded] == [[self request] authenticationNeeded]) && [[theURL host] isEqualToString:[requestURL host]] && ([theURL port] == [requestURL port] || ([requestURL port] && [[theURL port] isEqualToNumber:[requestURL port]])) && [[theURL scheme] isEqualToString:[requestURL scheme]] && ((![otherRequest authenticationRealm] && ![[self request] authenticationRealm]) || ([otherRequest authenticationRealm] && [[self request] authenticationRealm] && [[[self request] authenticationRealm] isEqualToString:[otherRequest authenticationRealm]]))) {
 			[requestsRequiringTheseCredentials addObject:otherRequest];
@@ -373,7 +373,7 @@ static const NSUInteger kDomainSection = 1;
 - (void)presentNextDialog
 {
 	if ([requestsNeedingAuthentication count]) {
-		ASIHTTPRequest *nextRequest = [requestsNeedingAuthentication objectAtIndex:0];
+		M_ASIHTTPRequest *nextRequest = [requestsNeedingAuthentication objectAtIndex:0];
 		[requestsNeedingAuthentication removeObjectAtIndex:0];
 		[[self class] presentAuthenticationDialogForRequest:nextRequest];
 	}
@@ -382,7 +382,7 @@ static const NSUInteger kDomainSection = 1;
 
 - (void)loginWithCredentialsFromDialog:(id)sender
 {
-	for (ASIHTTPRequest *theRequest in [self requestsRequiringTheseCredentials]) {
+	for (M_ASIHTTPRequest *theRequest in [self requestsRequiringTheseCredentials]) {
 
 		NSString *username = [[self usernameField] text];
 		NSString *password = [[self passwordField] text];
@@ -390,7 +390,7 @@ static const NSUInteger kDomainSection = 1;
 		if (username == nil) { username = @""; }
 		if (password == nil) { password = @""; }
 
-		if ([self type] == ASIProxyAuthenticationType) {
+		if ([self type] == M_ASIProxyAuthenticationType) {
 			[theRequest setProxyUsername:username];
 			[theRequest setProxyPassword:password];
 		} else {
@@ -399,10 +399,10 @@ static const NSUInteger kDomainSection = 1;
 		}
 
 		// Handle NTLM domains
-		NSString *scheme = ([self type] == ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
+		NSString *scheme = ([self type] == M_ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
 		if ([scheme isEqualToString:(NSString *)kCFHTTPAuthenticationSchemeNTLM]) {
 			NSString *domain = [[self domainField] text];
-			if ([self type] == ASIProxyAuthenticationType) {
+			if ([self type] == M_ASIProxyAuthenticationType) {
 				[theRequest setProxyDomain:domain];
 			} else {
 				[theRequest setDomain:domain];
@@ -419,7 +419,7 @@ static const NSUInteger kDomainSection = 1;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-	NSString *scheme = ([self type] == ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
+	NSString *scheme = ([self type] == M_ASIStandardAuthenticationType) ? [[self request] authenticationScheme] : [[self request] proxyAuthenticationScheme];
 	if ([scheme isEqualToString:(NSString *)kCFHTTPAuthenticationSchemeNTLM]) {
 		return 2;
 	}

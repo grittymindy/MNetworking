@@ -6,14 +6,14 @@
 //  Copyright (c) 2014年 Mindy. All rights reserved.
 //
 
-#import "ASIHTTPRequest+MNetworking.h"
+#import "M_ASIHTTPRequest+MNetworking.h"
 #import <objc/runtime.h>
 
 
 static const char *groupNameKey;
 static const char *operationKey;
 
-@implementation ASIHTTPRequest (MNetworking)
+@implementation M_ASIHTTPRequest (MNetworking)
 
 
 -(NSString *)groupName{

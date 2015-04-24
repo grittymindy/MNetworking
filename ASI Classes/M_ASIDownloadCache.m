@@ -6,26 +6,26 @@
 //  Copyright 2010 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASIDownloadCache.h"
-#import "ASIHTTPRequest.h"
+#import "M_ASIDownloadCache.h"
+#import "M_ASIHTTPRequest.h"
 #import <CommonCrypto/CommonHMAC.h>
 
-static ASIDownloadCache *sharedCache = nil;
+static M_ASIDownloadCache *sharedCache = nil;
 
 static NSString *sessionCacheFolder = @"SessionStore";
 static NSString *permanentCacheFolder = @"PermanentStore";
 static NSArray *fileExtensionsToHandleAsHTML = nil;
 
-@interface ASIDownloadCache ()
+@interface M_ASIDownloadCache ()
 + (NSString *)keyForURL:(NSURL *)url;
 - (NSString *)pathToFile:(NSString *)file;
 @end
 
-@implementation ASIDownloadCache
+@implementation M_ASIDownloadCache
 
 + (void)initialize
 {
-	if (self == [ASIDownloadCache class]) {
+	if (self == [M_ASIDownloadCache class]) {
 		// Obviously this is not an exhaustive list, but hopefully these are the most commonly used and this will 'just work' for the widest range of people
 		// I imagine many web developers probably use url rewriting anyway
 		fileExtensionsToHandleAsHTML = [[NSArray alloc] initWithObjects:@"asp",@"aspx",@"jsp",@"php",@"rb",@"py",@"pl",@"cgi", nil];
@@ -36,7 +36,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 {
 	self = [super init];
 	[self setShouldRespectCacheControlHeaders:YES];
-	[self setDefaultCachePolicy:ASIUseDefaultCachePolicy];
+	[self setDefaultCachePolicy:M_ASIUseDefaultCachePolicy];
 	[self setAccessLock:[[[NSRecursiveLock alloc] init] autorelease]];
 	return self;
 }
@@ -73,7 +73,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 - (void)setStoragePath:(NSString *)path
 {
 	[[self accessLock] lock];
-	[self clearCachedResponsesForStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
+	[self clearCachedResponsesForStoragePolicy:M_ASICacheForSessionDurationCacheStoragePolicy];
 	[storagePath release];
 	storagePath = [path retain];
 
@@ -94,11 +94,11 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 			}
 		}
 	}
-	[self clearCachedResponsesForStoragePolicy:ASICacheForSessionDurationCacheStoragePolicy];
+	[self clearCachedResponsesForStoragePolicy:M_ASICacheForSessionDurationCacheStoragePolicy];
 	[[self accessLock] unlock];
 }
 
-- (void)updateExpiryForRequest:(ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
+- (void)updateExpiryForRequest:(M_ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
 {
 	NSString *headerPath = [self pathToStoreCachedResponseHeadersForRequest:request];
 	NSMutableDictionary *cachedHeaders = [NSMutableDictionary dictionaryWithContentsOfFile:headerPath];
@@ -113,16 +113,16 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	[cachedHeaders writeToFile:headerPath atomically:NO];
 }
 
-- (NSDate *)expiryDateForRequest:(ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
+- (NSDate *)expiryDateForRequest:(M_ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
 {
-  return [ASIHTTPRequest expiryDateForRequest:request maxAge:maxAge];
+  return [M_ASIHTTPRequest expiryDateForRequest:request maxAge:maxAge];
 }
 
-- (void)storeResponseForRequest:(ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
+- (void)storeResponseForRequest:(M_ASIHTTPRequest *)request maxAge:(NSTimeInterval)maxAge
 {
 	[[self accessLock] lock];
 
-	if ([request error] || ![request responseHeaders] || ([request cachePolicy] & ASIDoNotWriteToCacheCachePolicy)) {
+	if ([request error] || ![request responseHeaders] || ([request cachePolicy] & M_ASIDoNotWriteToCacheCachePolicy)) {
 		[[self accessLock] unlock];
 		return;
 	}
@@ -250,7 +250,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 }
 
 
-- (NSString *)pathToStoreCachedResponseDataForRequest:(ASIHTTPRequest *)request
+- (NSString *)pathToStoreCachedResponseDataForRequest:(M_ASIHTTPRequest *)request
 {
 	[[self accessLock] lock];
 	if (![self storagePath]) {
@@ -258,7 +258,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 		return nil;
 	}
 
-	NSString *path = [[self storagePath] stringByAppendingPathComponent:([request cacheStoragePolicy] == ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
+	NSString *path = [[self storagePath] stringByAppendingPathComponent:([request cacheStoragePolicy] == M_ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
 
 	// Grab the file extension, if there is one. We do this so we can save the cached response with the same file extension - this is important if you want to display locally cached data in a web view 
 	NSString *extension = [[[request url] path] pathExtension];
@@ -273,14 +273,14 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	return path;
 }
 
-- (NSString *)pathToStoreCachedResponseHeadersForRequest:(ASIHTTPRequest *)request
+- (NSString *)pathToStoreCachedResponseHeadersForRequest:(M_ASIHTTPRequest *)request
 {
 	[[self accessLock] lock];
 	if (![self storagePath]) {
 		[[self accessLock] unlock];
 		return nil;
 	}
-	NSString *path = [[self storagePath] stringByAppendingPathComponent:([request cacheStoragePolicy] == ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
+	NSString *path = [[self storagePath] stringByAppendingPathComponent:([request cacheStoragePolicy] == M_ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
 	path =  [path stringByAppendingPathComponent:[[[self class] keyForURL:[request url]] stringByAppendingPathExtension:@"cachedheaders"]];
 	[[self accessLock] unlock];
 	return path;
@@ -307,12 +307,12 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	[[self accessLock] unlock];
 }
 
-- (void)removeCachedDataForRequest:(ASIHTTPRequest *)request
+- (void)removeCachedDataForRequest:(M_ASIHTTPRequest *)request
 {
 	[self removeCachedDataForURL:[request url]];
 }
 
-- (BOOL)isCachedDataCurrentForRequest:(ASIHTTPRequest *)request
+- (BOOL)isCachedDataCurrentForRequest:(M_ASIHTTPRequest *)request
 {
 	[[self accessLock] lock];
 	if (![self storagePath]) {
@@ -371,34 +371,34 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	return YES;
 }
 
-- (ASICachePolicy)defaultCachePolicy
+- (M_ASICachePolicy)defaultCachePolicy
 {
 	[[self accessLock] lock];
-	ASICachePolicy cp = defaultCachePolicy;
+	M_ASICachePolicy cp = defaultCachePolicy;
 	[[self accessLock] unlock];
 	return cp;
 }
 
 
-- (void)setDefaultCachePolicy:(ASICachePolicy)cachePolicy
+- (void)setDefaultCachePolicy:(M_ASICachePolicy)cachePolicy
 {
 	[[self accessLock] lock];
 	if (!cachePolicy) {
-		defaultCachePolicy = ASIAskServerIfModifiedWhenStaleCachePolicy;
+		defaultCachePolicy = M_ASIAskServerIfModifiedWhenStaleCachePolicy;
 	}  else {
 		defaultCachePolicy = cachePolicy;	
 	}
 	[[self accessLock] unlock];
 }
 
-- (void)clearCachedResponsesForStoragePolicy:(ASICacheStoragePolicy)storagePolicy
+- (void)clearCachedResponsesForStoragePolicy:(M_ASICacheStoragePolicy)storagePolicy
 {
 	[[self accessLock] lock];
 	if (![self storagePath]) {
 		[[self accessLock] unlock];
 		return;
 	}
-	NSString *path = [[self storagePath] stringByAppendingPathComponent:(storagePolicy == ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
+	NSString *path = [[self storagePath] stringByAppendingPathComponent:(storagePolicy == M_ASICacheForSessionDurationCacheStoragePolicy ? sessionCacheFolder : permanentCacheFolder)];
 
 	NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
 
@@ -424,7 +424,7 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	[[self accessLock] unlock];
 }
 
-+ (BOOL)serverAllowsResponseCachingForRequest:(ASIHTTPRequest *)request
++ (BOOL)serverAllowsResponseCachingForRequest:(M_ASIHTTPRequest *)request
 {
 	NSString *cacheControl = [[[request responseHeaders] objectForKey:@"Cache-Control"] lowercaseString];
 	if (cacheControl) {
@@ -460,14 +460,14 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	return [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],result[8], result[9], result[10], result[11],result[12], result[13], result[14], result[15]]; 	
 }
 
-- (BOOL)canUseCachedDataForRequest:(ASIHTTPRequest *)request
+- (BOOL)canUseCachedDataForRequest:(M_ASIHTTPRequest *)request
 {
 	// Ensure the request is allowed to read from the cache
-	if ([request cachePolicy] & ASIDoNotReadFromCacheCachePolicy) {
+	if ([request cachePolicy] & M_ASIDoNotReadFromCacheCachePolicy) {
 		return NO;
 
 	// If we don't want to load the request whatever happens, always pretend we have cached data even if we don't
-	} else if ([request cachePolicy] & ASIDontLoadCachePolicy) {
+	} else if ([request cachePolicy] & M_ASIDontLoadCachePolicy) {
 		return YES;
 	}
 
@@ -483,21 +483,21 @@ static NSArray *fileExtensionsToHandleAsHTML = nil;
 	// If we get here, we have cached data
 
 	// If we have cached data, we can use it
-	if ([request cachePolicy] & ASIOnlyLoadIfNotCachedCachePolicy) {
+	if ([request cachePolicy] & M_ASIOnlyLoadIfNotCachedCachePolicy) {
 		return YES;
 
 	// If we want to fallback to the cache after an error
-	} else if ([request complete] && [request cachePolicy] & ASIFallbackToCacheIfLoadFailsCachePolicy) {
+	} else if ([request complete] && [request cachePolicy] & M_ASIFallbackToCacheIfLoadFailsCachePolicy) {
 		return YES;
 
 	// If we have cached data that is current, we can use it
-	} else if ([request cachePolicy] & ASIAskServerIfModifiedWhenStaleCachePolicy) {
+	} else if ([request cachePolicy] & M_ASIAskServerIfModifiedWhenStaleCachePolicy) {
 		if ([self isCachedDataCurrentForRequest:request]) {
 			return YES;
 		}
 
 	// If we've got headers from a conditional GET and the cached data is still current, we can use it
-	} else if ([request cachePolicy] & ASIAskServerIfModifiedCachePolicy) {
+	} else if ([request cachePolicy] & M_ASIAskServerIfModifiedCachePolicy) {
 		if (![request responseHeaders]) {
 			return NO;
 		} else if ([self isCachedDataCurrentForRequest:request]) {

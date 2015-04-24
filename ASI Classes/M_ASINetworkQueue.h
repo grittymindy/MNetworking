@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIProgressDelegate.h"
+#import "M_ASIHTTPRequestDelegate.h"
+#import "M_ASIProgressDelegate.h"
 
-@interface ASINetworkQueue : NSOperationQueue <ASIProgressDelegate, ASIHTTPRequestDelegate, NSCopying> {
+@interface M_ASINetworkQueue : NSOperationQueue <M_ASIProgressDelegate, M_ASIHTTPRequestDelegate, NSCopying> {
 	
 	// Delegate will get didFail + didFinish messages (if set)
 	id delegate;

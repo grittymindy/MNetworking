@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@class ASIHTTPRequest;
+@class M_ASIHTTPRequest;
 
 // This is a wrapper for NSInputStream that pretends to be an NSInputStream itself
 // Subclassing NSInputStream seems to be tricky, and may involve overriding undocumented methods, so we'll cheat instead.
 // It is used by ASIHTTPRequest whenever we have a request body, and handles measuring and throttling the bandwidth used for uploading
 
-@interface ASIInputStream : NSObject {
+@interface M_ASIInputStream : NSObject {
 	NSInputStream *stream;
-	ASIHTTPRequest *request;
+	M_ASIHTTPRequest *request;
 }
-+ (id)inputStreamWithFileAtPath:(NSString *)path request:(ASIHTTPRequest *)request;
-+ (id)inputStreamWithData:(NSData *)data request:(ASIHTTPRequest *)request;
++ (id)inputStreamWithFileAtPath:(NSString *)path request:(M_ASIHTTPRequest *)request;
++ (id)inputStreamWithData:(NSData *)data request:(M_ASIHTTPRequest *)request;
 
 @property (retain, nonatomic) NSInputStream *stream;
-@property (assign, nonatomic) ASIHTTPRequest *request;
+@property (assign, nonatomic) M_ASIHTTPRequest *request;
 @end

@@ -34,74 +34,74 @@
       location = "group:ASI+MNetworking"
       name = "ASI+MNetworking">
       <FileRef
-         location = "group:ASIHTTPRequest+MNetworking.h">
+         location = "group:M_ASIHTTPRequest+MNetworking.h">
       </FileRef>
       <FileRef
-         location = "group:ASIHTTPRequest+MNetworking.m">
+         location = "group:M_ASIHTTPRequest+MNetworking.m">
       </FileRef>
    </Group>
    <Group
       location = "group:ASI Classes"
       name = "ASI Classes">
       <FileRef
-         location = "group:ASIAuthenticationDialog.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIAuthenticationDialog.h">
       </FileRef>
       <FileRef
-         location = "group:ASIAuthenticationDialog.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIAuthenticationDialog.m">
       </FileRef>
       <FileRef
-         location = "group:ASICacheDelegate.h">
+         location = "group:M_ASICacheDelegate.h">
       </FileRef>
       <FileRef
-         location = "group:ASIDataCompressor.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDataCompressor.h">
       </FileRef>
       <FileRef
-         location = "group:ASIDataCompressor.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDataCompressor.m">
       </FileRef>
       <FileRef
-         location = "group:ASIDataDecompressor.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDataDecompressor.h">
       </FileRef>
       <FileRef
-         location = "group:ASIDataDecompressor.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDataDecompressor.m">
       </FileRef>
       <FileRef
-         location = "group:ASIDownloadCache.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDownloadCache.h">
       </FileRef>
       <FileRef
-         location = "group:ASIDownloadCache.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIDownloadCache.m">
       </FileRef>
       <FileRef
-         location = "group:ASIFormDataRequest.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIFormDataRequest.h">
       </FileRef>
       <FileRef
-         location = "group:ASIFormDataRequest.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIFormDataRequest.m">
       </FileRef>
       <FileRef
-         location = "group:ASIHTTPRequest.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIHTTPRequest.h">
       </FileRef>
       <FileRef
-         location = "group:ASIHTTPRequest.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIHTTPRequest.m">
       </FileRef>
       <FileRef
-         location = "group:ASIHTTPRequestConfig.h">
+         location = "group:M_ASIHTTPRequestConfig.h">
       </FileRef>
       <FileRef
-         location = "group:ASIHTTPRequestDelegate.h">
+         location = "group:M_ASIHTTPRequestDelegate.h">
       </FileRef>
       <FileRef
-         location = "group:ASIInputStream.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIInputStream.h">
       </FileRef>
       <FileRef
-         location = "group:ASIInputStream.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASIInputStream.m">
       </FileRef>
       <FileRef
-         location = "group:ASINetworkQueue.h">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASINetworkQueue.h">
       </FileRef>
       <FileRef
-         location = "group:ASINetworkQueue.m">
+         location = "group:/Users/baidu/GitHub/MNetworking/ASI Classes/M_ASINetworkQueue.m">
       </FileRef>
       <FileRef
-         location = "group:ASIProgressDelegate.h">
+         location = "group:M_ASIProgressDelegate.h">
       </FileRef>
    </Group>
    <Group

@@ -7,10 +7,10 @@
 //
 
 #import "MNHTTPClient.h"
-#import "ASIHTTPRequest.h"
-#import "ASIHTTPRequest+MNetworking.h"
-#import "ASIFormDataRequest.h"
-#import "ASIDownloadCache.h"
+#import "M_ASIHTTPRequest.h"
+#import "M_ASIHTTPRequest+MNetworking.h"
+#import "M_ASIFormDataRequest.h"
+#import "M_ASIDownloadCache.h"
 
 
 
@@ -46,7 +46,7 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 
-@interface MNHTTPClient()<ASIHTTPRequestDelegate>
+@interface MNHTTPClient()<M_ASIHTTPRequestDelegate>
 
 @property (readwrite, nonatomic, strong) NSString *baseURLStr;
 
@@ -70,14 +70,14 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 
 -(void)GETOperation:(MNHTTPOperation *)operation{
     NSURL *url = [self URLFromOperation:operation];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    M_ASIHTTPRequest *request = [M_ASIHTTPRequest requestWithURL:url];
     [self buildRequest:request fromOperation:operation];
     [request startAsynchronous];
 }
 
 -(void)POSTOperation:(MNHTTPOperation *)operation{
     NSURL *url = [self URLFromOperation:operation];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    M_ASIFormDataRequest *request = [M_ASIFormDataRequest requestWithURL:url];
     [self buildRequest:request fromOperation:operation];
     [request startAsynchronous];
 }
@@ -85,8 +85,8 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 
 #pragma mark - Cancel HTTPOperation
 -(void)cancelOperation:(MNHTTPOperation*)operation{
-    NSOperationQueue *queue = [ASIHTTPRequest sharedQueue];
-    for(ASIHTTPRequest *request in queue.operations){
+    NSOperationQueue *queue = [M_ASIHTTPRequest sharedQueue];
+    for(M_ASIHTTPRequest *request in queue.operations){
         if([request.operation isEqual:operation]){
             [request clearDelegatesAndCancel];
         }
@@ -94,8 +94,8 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 -(void)cancelGroup:(NSString *)groupName{
-    NSOperationQueue *queue = [ASIHTTPRequest sharedQueue];
-    for(ASIHTTPRequest *request in queue.operations){
+    NSOperationQueue *queue = [M_ASIHTTPRequest sharedQueue];
+    for(M_ASIHTTPRequest *request in queue.operations){
         if([request.groupName isEqualToString:groupName]){
             [request clearDelegatesAndCancel];
         }
@@ -103,16 +103,16 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 -(void)cancelAllOperations{
-    NSOperationQueue *queue = [ASIHTTPRequest sharedQueue];
-    for(ASIHTTPRequest *request in queue.operations){
+    NSOperationQueue *queue = [M_ASIHTTPRequest sharedQueue];
+    for(M_ASIHTTPRequest *request in queue.operations){
         [request clearDelegatesAndCancel];
     }
 }
 
 #pragma mark - Query
 -(BOOL)existsGroup:(NSString *)groupName{
-    NSOperationQueue *queue = [ASIHTTPRequest sharedQueue];
-    for(ASIHTTPRequest *request in queue.operations){
+    NSOperationQueue *queue = [M_ASIHTTPRequest sharedQueue];
+    for(M_ASIHTTPRequest *request in queue.operations){
         if([request.groupName isEqualToString:groupName]){
             return YES;
         }
@@ -122,7 +122,7 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 #pragma mark - Private
--(void)buildRequest:(ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
+-(void)buildRequest:(M_ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
     [self buildBasicPartForRequest:request fromOperation:operation];
 
     [self buildBlockPartForRequest:request fromOperation:operation];
@@ -131,21 +131,21 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 
--(void)buildBasicPartForRequest:(ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
+-(void)buildBasicPartForRequest:(M_ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
     NSURL *url = [self URLFromOperation:operation];
     request.url = url;
     request.groupName = operation.groupName;
     request.operation = operation;
     request.timeOutSeconds = 60;
-    [request setDownloadCache:[ASIDownloadCache sharedCache]];
+    [request setDownloadCache:[M_ASIDownloadCache sharedCache]];
     
     if(operation.shouldUseCache){
-        request.cachePolicy = (ASICachePolicy)(ASIAskServerIfModifiedWhenStaleCachePolicy | ASIFallbackToCacheIfLoadFailsCachePolicy);
-        request.cacheStoragePolicy = ASICachePermanentlyCacheStoragePolicy;
+        request.cachePolicy = (M_ASICachePolicy)(M_ASIAskServerIfModifiedWhenStaleCachePolicy | M_ASIFallbackToCacheIfLoadFailsCachePolicy);
+        request.cacheStoragePolicy = M_ASICachePermanentlyCacheStoragePolicy;
         request.secondsToCache = operation.secondsToCache;
     }else{
-        request.cachePolicy = ASIDoNotWriteToCacheCachePolicy;
-        request.cacheStoragePolicy = ASICacheForSessionDurationCacheStoragePolicy;
+        request.cachePolicy = M_ASIDoNotWriteToCacheCachePolicy;
+        request.cacheStoragePolicy = M_ASICacheForSessionDurationCacheStoragePolicy;
         request.secondsToCache = 0;
     }
     
@@ -154,7 +154,7 @@ static NSURL* URLFromURLStr(NSString *urlStr){
     }
 }
 
--(void)buildBlockPartForRequest:(ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
+-(void)buildBlockPartForRequest:(M_ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
     __weak typeof(&*request) weakReq = request;
     
     /**
@@ -201,8 +201,8 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 }
 
 
--(void)buildPostPartForRequest:(ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
-    if([request isKindOfClass:[ASIFormDataRequest class]]){
+-(void)buildPostPartForRequest:(M_ASIHTTPRequest *)request fromOperation:(MNHTTPOperation *)operation{
+    if([request isKindOfClass:[M_ASIFormDataRequest class]]){
         NSDictionary *postValues = [operation allPostValues];
         NSDictionary *postFilePaths = [operation allPostFilePaths];
         NSDictionary *postData = [operation allPostData];
@@ -222,21 +222,21 @@ static NSURL* URLFromURLStr(NSString *urlStr){
         };
         
         ProcessEach processValues = ^(NSString *key, id object){
-            [(ASIFormDataRequest *)request addPostValue:object forKey:key];
+            [(M_ASIFormDataRequest *)request addPostValue:object forKey:key];
         };
         Process(postValues, processValues);
         
         ProcessEach processFilePaths = ^(NSString *key, id object){
-            [(ASIFormDataRequest *)request addFile:object forKey:key];
+            [(M_ASIFormDataRequest *)request addFile:object forKey:key];
         };
         Process(postFilePaths, processFilePaths);
         
         ProcessEach processData = ^(NSString *key, id object){
-            [(ASIFormDataRequest *)request addData:object forKey:key];
+            [(M_ASIFormDataRequest *)request addData:object forKey:key];
         };
         Process(postData, processData);
         
-        ((ASIFormDataRequest *)request).stringEncoding = operation.stringEncoding;
+        ((M_ASIFormDataRequest *)request).stringEncoding = operation.stringEncoding;
     }
 }
 

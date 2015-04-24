@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 #import <zlib.h>
 
-@interface ASIDataCompressor : NSObject {
+@interface M_ASIDataCompressor : NSObject {
 	BOOL streamReady;
 	z_stream zStream;
 }

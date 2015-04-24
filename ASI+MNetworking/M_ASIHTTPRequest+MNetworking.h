@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 Mindy. All rights reserved.
 //
 
-#import "ASIHTTPRequest.h"
+#import "M_ASIHTTPRequest.h"
 #import "MNHTTPOperation.h"
 
-@interface ASIHTTPRequest (MNetworking)
+@interface M_ASIHTTPRequest (MNetworking)
 
 @property (nonatomic, strong) NSString *groupName;
 

@@ -6,16 +6,16 @@
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASINetworkQueue.h"
-#import "ASIHTTPRequest.h"
+#import "M_ASINetworkQueue.h"
+#import "M_ASIHTTPRequest.h"
 
 // Private stuff
-@interface ASINetworkQueue ()
+@interface M_ASINetworkQueue ()
 	- (void)resetProgressDelegate:(id *)progressDelegate;
 	@property (assign) int requestsCount;
 @end
 
-@implementation ASINetworkQueue
+@implementation M_ASINetworkQueue
 
 - (id)init
 {
@@ -35,7 +35,7 @@
 - (void)dealloc
 {
 	//We need to clear the queue on any requests that haven't got around to cleaning up yet, as otherwise they'll try to let us know if something goes wrong, and we'll be long gone by then
-	for (ASIHTTPRequest *request in [self operations]) {
+	for (M_ASIHTTPRequest *request in [self operations]) {
 		[request setQueue:nil];
 	}
 	[userInfo release];
@@ -107,16 +107,16 @@
 	SEL selector = @selector(setProgress:);
 	if ([*progressDelegate respondsToSelector:selector]) {
 		float value = 0.0f;
-		[ASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
+		[M_ASIHTTPRequest performSelector:selector onTarget:progressDelegate withObject:nil amount:&value callerToRetain:nil];
 	}
 #endif
 }
 
 - (void)addHEADOperation:(NSOperation *)operation
 {
-	if ([operation isKindOfClass:[ASIHTTPRequest class]]) {
+	if ([operation isKindOfClass:[M_ASIHTTPRequest class]]) {
 		
-		ASIHTTPRequest *request = (ASIHTTPRequest *)operation;
+		M_ASIHTTPRequest *request = (M_ASIHTTPRequest *)operation;
 		[request setRequestMethod:@"HEAD"];
 		[request setQueuePriority:10];
 		[request setShowAccurateProgress:YES];
@@ -130,13 +130,13 @@
 // Only add ASIHTTPRequests to this queue!!
 - (void)addOperation:(NSOperation *)operation
 {
-	if (![operation isKindOfClass:[ASIHTTPRequest class]]) {
+	if (![operation isKindOfClass:[M_ASIHTTPRequest class]]) {
 		[NSException raise:@"AttemptToAddInvalidRequest" format:@"Attempted to add an object that was not an ASIHTTPRequest to an ASINetworkQueue"];
 	}
 		
 	[self setRequestsCount:[self requestsCount]+1];
 	
-	ASIHTTPRequest *request = (ASIHTTPRequest *)operation;
+	M_ASIHTTPRequest *request = (M_ASIHTTPRequest *)operation;
 	
 	if ([self showAccurateProgress]) {
 		
@@ -149,7 +149,7 @@
 		// Instead, they'll update the total progress if and when they receive a content-length header
 		if ([[request requestMethod] isEqualToString:@"GET"]) {
 			if ([self isSuspended]) {
-				ASIHTTPRequest *HEADRequest = [request HEADRequest];
+				M_ASIHTTPRequest *HEADRequest = [request HEADRequest];
 				[self addHEADOperation:HEADRequest];
 				[request addDependency:HEADRequest];
 				if ([request shouldResetDownloadProgress]) {
@@ -179,28 +179,28 @@
 
 }
 
-- (void)requestStarted:(ASIHTTPRequest *)request
+- (void)requestStarted:(M_ASIHTTPRequest *)request
 {
 	if ([self requestDidStartSelector]) {
 		[[self delegate] performSelector:[self requestDidStartSelector] withObject:request];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
+- (void)request:(M_ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
 {
 	if ([self requestDidReceiveResponseHeadersSelector]) {
 		[[self delegate] performSelector:[self requestDidReceiveResponseHeadersSelector] withObject:request withObject:responseHeaders];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request willRedirectToURL:(NSURL *)newURL
+- (void)request:(M_ASIHTTPRequest *)request willRedirectToURL:(NSURL *)newURL
 {
 	if ([self requestWillRedirectSelector]) {
 		[[self delegate] performSelector:[self requestWillRedirectSelector] withObject:request withObject:newURL];
 	}
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request
+- (void)requestFinished:(M_ASIHTTPRequest *)request
 {
 	[self setRequestsCount:[self requestsCount]-1];
 	if ([self requestDidFinishSelector]) {
@@ -213,7 +213,7 @@
 	}
 }
 
-- (void)requestFailed:(ASIHTTPRequest *)request
+- (void)requestFailed:(M_ASIHTTPRequest *)request
 {
 	[self setRequestsCount:[self requestsCount]-1];
 	if ([self requestDidFailSelector]) {
@@ -231,42 +231,42 @@
 }
 
 
-- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+- (void)request:(M_ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
 {
 	[self setBytesDownloadedSoFar:[self bytesDownloadedSoFar]+(unsigned long long)bytes];
 	if ([self downloadProgressDelegate]) {
-		[ASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self bytesDownloadedSoFar] ofTotal:[self totalBytesToDownload]];
+		[M_ASIHTTPRequest updateProgressIndicator:&downloadProgressDelegate withProgress:[self bytesDownloadedSoFar] ofTotal:[self totalBytesToDownload]];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request didSendBytes:(long long)bytes
+- (void)request:(M_ASIHTTPRequest *)request didSendBytes:(long long)bytes
 {
 	[self setBytesUploadedSoFar:[self bytesUploadedSoFar]+(unsigned long long)bytes];
 	if ([self uploadProgressDelegate]) {
-		[ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self bytesUploadedSoFar] ofTotal:[self totalBytesToUpload]];
+		[M_ASIHTTPRequest updateProgressIndicator:&uploadProgressDelegate withProgress:[self bytesUploadedSoFar] ofTotal:[self totalBytesToUpload]];
 	}
 }
 
-- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
+- (void)request:(M_ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
 {
 	[self setTotalBytesToDownload:[self totalBytesToDownload]+(unsigned long long)newLength];
 }
 
-- (void)request:(ASIHTTPRequest *)request incrementUploadSizeBy:(long long)newLength
+- (void)request:(M_ASIHTTPRequest *)request incrementUploadSizeBy:(long long)newLength
 {
 	[self setTotalBytesToUpload:[self totalBytesToUpload]+(unsigned long long)newLength];
 }
 
 
 // Since this queue takes over as the delegate for all requests it contains, it should forward authorisation requests to its own delegate
-- (void)authenticationNeededForRequest:(ASIHTTPRequest *)request
+- (void)authenticationNeededForRequest:(M_ASIHTTPRequest *)request
 {
 	if ([[self delegate] respondsToSelector:@selector(authenticationNeededForRequest:)]) {
 		[[self delegate] performSelector:@selector(authenticationNeededForRequest:) withObject:request];
 	}
 }
 
-- (void)proxyAuthenticationNeededForRequest:(ASIHTTPRequest *)request
+- (void)proxyAuthenticationNeededForRequest:(M_ASIHTTPRequest *)request
 {
 	if ([[self delegate] respondsToSelector:@selector(proxyAuthenticationNeededForRequest:)]) {
 		[[self delegate] performSelector:@selector(proxyAuthenticationNeededForRequest:) withObject:request];
@@ -306,7 +306,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	ASINetworkQueue *newQueue = [[[self class] alloc] init];
+	M_ASINetworkQueue *newQueue = [[[self class] alloc] init];
 	[newQueue setDelegate:[self delegate]];
 	[newQueue setRequestDidStartSelector:[self requestDidStartSelector]];
 	[newQueue setRequestWillRedirectSelector:[self requestWillRedirectSelector]];

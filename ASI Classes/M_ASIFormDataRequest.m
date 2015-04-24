@@ -6,11 +6,11 @@
 //  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
 
-#import "ASIFormDataRequest.h"
+#import "M_ASIFormDataRequest.h"
 
 
 // Private stuff
-@interface ASIFormDataRequest ()
+@interface M_ASIFormDataRequest ()
 - (void)buildMultipartFormDataPostBody;
 - (void)buildURLEncodedPostBody;
 - (void)appendPostString:(NSString *)string;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation ASIFormDataRequest
+@implementation M_ASIFormDataRequest
 
 #pragma mark utilities
 - (NSString*)encodeURL:(NSString *)string
@@ -47,7 +47,7 @@
 - (id)initWithURL:(NSURL *)newURL
 {
 	self = [super initWithURL:newURL];
-	[self setPostFormat:ASIURLEncodedPostFormat];
+	[self setPostFormat:M_ASIURLEncodedPostFormat];
 	[self setStringEncoding:NSUTF8StringEncoding];
         [self setRequestMethod:@"POST"];
 	return self;
@@ -105,7 +105,7 @@
 	BOOL isDirectory = NO;
 	BOOL fileExists = [[[[NSFileManager alloc] init] autorelease] fileExistsAtPath:filePath isDirectory:&isDirectory];
 	if (!fileExists || isDirectory) {
-		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"No file exists at %@",filePath],NSLocalizedDescriptionKey,nil]]];
+		[self failWithError:[NSError errorWithDomain:NetworkRequestErrorDomain code:M_ASIInternalErrorWhileBuildingRequestType userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"No file exists at %@",filePath],NSLocalizedDescriptionKey,nil]]];
 	}
 
 	// If the caller didn't specify a custom file name, we'll use the file name of the file we were passed
@@ -115,7 +115,7 @@
 
 	// If we were given the path to a file, and the user didn't specify a mime type, we can detect it from the file extension
 	if (!contentType) {
-		contentType = [ASIHTTPRequest mimeTypeForFileAtPath:filePath];
+		contentType = [M_ASIHTTPRequest mimeTypeForFileAtPath:filePath];
 	}
 	[self addData:filePath withFileName:fileName andContentType:contentType forKey:key];
 }
@@ -199,7 +199,7 @@
 		[self setShouldStreamPostDataFromDisk:YES];
 	}
 	
-	if ([self postFormat] == ASIURLEncodedPostFormat) {
+	if ([self postFormat] == M_ASIURLEncodedPostFormat) {
 		[self buildURLEncodedPostBody];
 	} else {
 		[self buildMultipartFormDataPostBody];
@@ -276,7 +276,7 @@
 
 	// We can't post binary data using application/x-www-form-urlencoded
 	if ([[self fileData] count] > 0) {
-		[self setPostFormat:ASIMultipartFormDataPostFormat];
+		[self setPostFormat:M_ASIMultipartFormDataPostFormat];
 		[self buildMultipartFormDataPostBody];
 		return;
 	}
@@ -343,7 +343,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	ASIFormDataRequest *newRequest = [super copyWithZone:zone];
+	M_ASIFormDataRequest *newRequest = [super copyWithZone:zone];
 	[newRequest setPostData:[[[self postData] mutableCopyWithZone:zone] autorelease]];
 	[newRequest setFileData:[[[self fileData] mutableCopyWithZone:zone] autorelease]];
 	[newRequest setPostFormat:[self postFormat]];
