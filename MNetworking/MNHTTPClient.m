@@ -63,6 +63,8 @@ static NSURL* URLFromURLStr(NSString *urlStr){
 - (id)initWithBaseURLStr:(NSString *)urlStr{
     if(self = [super init]){        
         self.baseURLStr = urlStr;
+        self.appendedURLStr = @"";
+        self.userAgentStr = @"";
     }
     
     return self;
